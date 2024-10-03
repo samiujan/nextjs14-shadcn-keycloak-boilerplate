@@ -4,7 +4,11 @@ import { signIn, signOut, useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 
 export function ClientLoginButton() {
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
+
+    if (status === "loading") {
+        return <Button disabled>Loading...</Button>
+    }
 
     if (session && session.user) {
         return (
@@ -14,5 +18,6 @@ export function ClientLoginButton() {
             </div>
         )
     }
-    return <Button onClick={() => signIn("keycloak")}>Sign in</Button>
+
+    return <Button onClick={() => signIn("keycloak")}>Sign in with Keycloak</Button>
 }
