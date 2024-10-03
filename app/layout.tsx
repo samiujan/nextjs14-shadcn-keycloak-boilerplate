@@ -1,11 +1,11 @@
 import "./globals.css"
 import { Inter } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ClientProviders } from "@/components/client-providers"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "YALT2 - Yet Another Labeling Tool 2",
+  title: "YALT2 - Yet Another Labeling Tool",
   description: "A powerful tool for annotating images with namespaces, workflows, and role-based access.",
 }
 
@@ -17,12 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ClientProviders>
           <div className="flex flex-col min-h-screen">
             <header className="border-b">
               <div className="container mx-auto py-4">
@@ -31,7 +26,7 @@ export default function RootLayout({
             </header>
             {children}
           </div>
-        </ThemeProvider>
+        </ClientProviders>
       </body>
     </html>
   )

@@ -1,13 +1,17 @@
-import NextAuth from "next-auth"
+import { NextAuthOptions } from "next-auth"
 import KeycloakProvider from "next-auth/providers/keycloak"
-import { AuthOptions } from "next-auth"
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
         KeycloakProvider({
             clientId: process.env.KEYCLOAK_ID!,
             clientSecret: process.env.KEYCLOAK_SECRET!,
             issuer: process.env.KEYCLOAK_ISSUER,
+            authorization: {
+                params: {
+                    scope: "openid email profile",
+                },
+            },
         }),
     ],
     callbacks: {
@@ -24,8 +28,7 @@ export const authOptions: AuthOptions = {
             }
         },
     },
+    pages: {
+        signIn: "/auth/signin",
+    },
 }
-
-const handler = NextAuth(authOptions)
-
-export { handler as GET, handler as POST }
